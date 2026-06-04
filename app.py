@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel
+from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel, QPushButton
 import sys
 
 # This is a simple PySide6 application
@@ -14,12 +14,21 @@ class MainWindow(QMainWindow):
         central_widget = QWidget(self)
 
         #Layout is created to be used in the central widget
-        layout = QVBoxLayout(central_widget)
-        label = QLabel("Welcome to app made with PySide6")
-        layout.addWidget(label)
+        layout = QVBoxLayout()
+
+        #Items to be added to the layout
+        title_label = QLabel("Welcome to app made with PySide6")
+        subtitle_label = QLabel("Some buttons")
+        button_ok = QPushButton("OK")
+        button_cancel = QPushButton("Cancel")
+
+
+        layout.addWidget(title_label)
+        layout.addWidget(subtitle_label)
+        layout.addWidget(button_ok)
+        layout.addWidget(button_cancel)
 
         central_widget.setLayout(layout)
-
         self.setCentralWidget(central_widget)
                        
 
