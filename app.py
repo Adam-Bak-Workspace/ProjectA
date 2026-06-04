@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel
 import sys
 
 # This is a simple PySide6 application
@@ -9,6 +9,19 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("My First Window App")
         self.setGeometry(100, 100, 400, 300)
+
+        #cointainer widget for the main window
+        central_widget = QWidget(self)
+
+        #Layout is created to be used in the central widget
+        layout = QVBoxLayout(central_widget)
+        label = QLabel("Welcome to app made with PySide6")
+        layout.addWidget(label)
+
+        central_widget.setLayout(layout)
+
+        self.setCentralWidget(central_widget)
+                       
 
 # The main block checks if the script is run directly (not imported as a module)
 if __name__ == "__main__":
