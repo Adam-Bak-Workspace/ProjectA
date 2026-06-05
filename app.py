@@ -10,34 +10,40 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("My First Window App")
         self.setGeometry(100, 100, 400, 300)
 
-        #cointainer widget for the main window
-        central_widget = QWidget(self)
+        self._setup_ui()
+        self._setup_events()
 
+    def _setup_ui(self):
+        #cointainer widget for the main window
+        self.central_widget = QWidget(self)
         #Layout is created to be used in the central widget
-        layout = QVBoxLayout()
+        self.layout = QVBoxLayout()
 
         #Items to be added to the layout
         self.label = QLabel("Click the button")
-        button_hello = QPushButton("Say Hello")
-        button_clear = QPushButton("Clear Text")
-        button_CLI_test = QPushButton("CLI Test")
+        self.button_hello = QPushButton("Say Hello")
+        self.button_clear = QPushButton("Clear Text")
+        self.button_test_CLI = QPushButton("CLI Test")
 
-
-        #send signal when the button is clicked
-        button_CLI_test.clicked.connect(self.CLI_test)
-        button_hello.clicked.connect(self.say_hello)
-        button_clear.clicked.connect(self.clear_text)
+        self.layout.addWidget(self.label)
+        self.layout.addWidget(self.button_hello)
+        self.layout.addWidget(self.button_clear)
+        self.layout.addWidget(self.button_test_CLI)
         
-        layout.addWidget(self.label)
-        layout.addWidget(button_hello)
-        layout.addWidget(button_clear)
-        layout.addWidget(button_CLI_test)
 
-        central_widget.setLayout(layout)
-        self.setCentralWidget(central_widget)
+    def _setup_events(self):
+        #send signal when the button is clicked
+        self.button_test_CLI.clicked.connect(self.test_CLI)
+        self.button_hello.clicked.connect(self.say_hello)
+        self.button_clear.clicked.connect(self.clear_text)
+        
+        self.central_widget.setLayout(self.layout)
+        self.setCentralWidget(self.central_widget)
+        
+
     
     #Signal test
-    def CLI_test(self):
+    def test_CLI(self):
         print("Signal was sent from the button")
     def say_hello(self):
         self.label.setText("Hello from function")
