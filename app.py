@@ -17,19 +17,32 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout()
 
         #Items to be added to the layout
-        title_label = QLabel("Welcome to app made with PySide6")
-        subtitle_label = QLabel("Some buttons")
-        button_ok = QPushButton("OK")
-        button_cancel = QPushButton("Cancel")
+        self.label = QLabel("Click the button")
+        button_hello = QPushButton("Say Hello")
+        button_clear = QPushButton("Clear Text")
+        button_CLI_test = QPushButton("CLI Test")
 
-
-        layout.addWidget(title_label)
-        layout.addWidget(subtitle_label)
-        layout.addWidget(button_ok)
-        layout.addWidget(button_cancel)
+        #send signal when the button is clicked
+        button_CLI_test.clicked.connect(self.CLI_test)
+        button_hello.clicked.connect(self.say_hello)
+        button_clear.clicked.connect(self.clear_text)
+        
+        layout.addWidget(self.label)
+        layout.addWidget(button_hello)
+        layout.addWidget(button_clear)
+        layout.addWidget(button_CLI_test)
 
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
+    
+    #Signal test
+    def CLI_test(self):
+        print("Signal was sent from the button")
+    def say_hello(self):
+        self.label.setText("Hello from function")
+    def clear_text(self):
+        self.label.setText("")
+        
                        
 
 # The main block checks if the script is run directly (not imported as a module)
