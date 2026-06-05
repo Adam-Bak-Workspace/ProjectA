@@ -22,6 +22,7 @@ class MainWindow(QMainWindow):
         button_clear = QPushButton("Clear Text")
         button_CLI_test = QPushButton("CLI Test")
 
+
         #send signal when the button is clicked
         button_CLI_test.clicked.connect(self.CLI_test)
         button_hello.clicked.connect(self.say_hello)
@@ -43,11 +44,19 @@ class MainWindow(QMainWindow):
     def clear_text(self):
         self.label.setText("")
         
-                       
+#this function will load ctyle from .qss file
+def load_stylesheet():                      
+    with open("style.qss", "r") as style_file:
+        qss = style_file.read()
+        app.setStyleSheet(qss)
+    
 
 # The main block checks if the script is run directly (not imported as a module)
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    
+    # use function to load the stylesheet from the file 
+    load_stylesheet()
     window = MainWindow()
     window.show()
     #app.exec() starts the event loop, 
