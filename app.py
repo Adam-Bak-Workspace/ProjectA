@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget,
     QVBoxLayout, QLabel, QPushButton,
-    QFormLayout, QLineEdit
+    QFormLayout, QLineEdit, QTableWidget
 )
 
 import sys
@@ -21,7 +21,7 @@ class MainWindow(QMainWindow):
         central_widget = QWidget()
         main_layout = QVBoxLayout()
 
-        #1st form layout for input fields
+        #1 - form layout for input fields
         form_layout = QFormLayout()
         self.name_input = QLineEdit()
         self.email_input = QLineEdit()
@@ -29,9 +29,25 @@ class MainWindow(QMainWindow):
         form_layout.addRow("Name:", self.name_input)
         form_layout.addRow("Email:", self.email_input)
         
-        #Action buttons
+        #2 - action buttons
         self.button_add = QPushButton("Add Contact")
-        self.button_clear = QPushButton("Clear Fields")
+        self.button_clear = QPushButton("Clear All")
+
+        #3 - contact table
+        self.table = QTableWidget()
+        self.table.setColumnCount(2)
+        self.table.setHorizontalHeaderLabels(["Name", "Email"])
+
+        #come back to set vertical header to false and alternateing color
+        main_layout.addLayout(form_layout)
+        main_layout.addWidget(self.button_add)
+        main_layout.addWidget(self.button_clear)
+        main_layout.addWidget(QLabel("Contact List"))
+        main_layout.addWidget(self.table)
+
+        central_widget.setLayout(main_layout)
+        self.setCentralWidget(central_widget)
+
 
     def _setup_events(self):
         pass
