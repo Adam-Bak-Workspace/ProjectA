@@ -48,10 +48,26 @@ class MainWindow(QMainWindow):
         central_widget.setLayout(main_layout)
         self.setCentralWidget(central_widget)
 
+        self.statusBar().showMessage("Ready")
+
 
     def _setup_events(self):
-        pass
-        
+        self.button_add.clicked.connect(self.add_contact)
+
+
+    #Append data in memory
+    def add_contact(self):
+        name = self.name_input.text().strip()
+        email = self.email_input.text().strip()
+        if not name or not email:
+            self.statusBar().showMessage("Please enter a name and email.")
+            return
+        self.statusBar().showMessage(f"{name} with email: {email} Submitted.")
+
+    # def clear_contacts(self):
+    #     self.table.setRowCount(0)
+    #     self.statusBar().showMessage("All contacts cleared.")
+
 
         
 #this function will load ctyle from .qss file
