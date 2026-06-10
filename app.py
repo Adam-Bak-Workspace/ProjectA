@@ -1,7 +1,8 @@
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget,
     QVBoxLayout, QLabel, QPushButton,
-    QFormLayout, QLineEdit, QTableWidget
+    QFormLayout, QLineEdit, QTableWidget,
+    QTableWidgetItem
 )
 
 import sys
@@ -12,6 +13,8 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Contact Manager")
         self.setGeometry(100, 100, 1000, 900)
+
+        self.contacts = []
 
         self._setup_ui()
         self._setup_events()
@@ -55,14 +58,29 @@ class MainWindow(QMainWindow):
         self.button_add.clicked.connect(self.add_contact)
 
 
-    #Append data in memory
     def add_contact(self):
         name = self.name_input.text().strip()
         email = self.email_input.text().strip()
         if not name or not email:
             self.statusBar().showMessage("Please enter a name and email.")
             return
+
+        #Add data to the table
+        self.contacts.append((name, email))
+
+        #Update the table with the new contact
+        self.table.setRowCount(len(self.contacts))
+
+        #table test
+        for row, (name, email) in enumerate(self.contacts):
+            self.table.setItem(row, 0, QTableWidgetItem(name))
+            self.table.setItem(row, 1, QTableWidgetItem(email))
+        
+        self.name_input.clear()
+        self.email_input.clear()
         self.statusBar().showMessage(f"{name} with email: {email} Submitted.")
+
+
 
     # def clear_contacts(self):
     #     self.table.setRowCount(0)
