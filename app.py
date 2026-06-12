@@ -40,6 +40,10 @@ class MainWindow(QMainWindow):
         self.table = QTableWidget()
         self.table.setColumnCount(2)
         self.table.setHorizontalHeaderLabels(["Name", "Email"])
+        self.table.verticalHeader().setVisible(False)
+        self.table.setAlternatingRowColors(True)
+        self.table.setColumnWidth(0, 200)
+        self.table.setColumnWidth(1, 250)
 
         #come back to set vertical header to false and alternateing color
         main_layout.addLayout(form_layout)
@@ -56,6 +60,7 @@ class MainWindow(QMainWindow):
 
     def _setup_events(self):
         self.button_add.clicked.connect(self.add_contact)
+        self.button_clear.clicked.connect(self.clear_contacts_table)
 
 
     def add_contact(self):
@@ -69,23 +74,23 @@ class MainWindow(QMainWindow):
         self.contacts.append((name, email))
 
         #Update the table with the new contact
-        self.table.setRowCount(len(self.contacts))
-
-        #table test
-        for row, (name, email) in enumerate(self.contacts):
-            self.table.setItem(row, 0, QTableWidgetItem(name))
-            self.table.setItem(row, 1, QTableWidgetItem(email))
+        self._refresh_table()
         
         self.name_input.clear()
         self.email_input.clear()
         self.statusBar().showMessage(f"{name} with email: {email} Submitted.")
 
 
+    def clear_contacts_table(self):
+        self.contacts.clear()
+        self._refresh_table()
+        self.statusBar().showMessage("All contacts cleared.")
 
-    # def clear_contacts(self):
-    #     self.table.setRowCount(0)
-    #     self.statusBar().showMessage("All contacts cleared.")
-
+    def _refresh_table(self):
+        self.table.setRowCount(len(self.contacts))
+        for row, (name, email) in enumerate(self.contacts):
+            self.table.setItem(row, 0, QTableWidgetItem(name))
+            self.table.setItem(row, 1, QTableWidgetItem(email))
 
         
 #this function will load ctyle from .qss file
@@ -104,5 +109,6 @@ if __name__ == "__main__":
     window = MainWindow()
     window.show()
     #app.exec() starts the event loop, 
+
     #sys.exit() ensures that the application exits when the event loop is terminated
     sys.exit(app.exec())
